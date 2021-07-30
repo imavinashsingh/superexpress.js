@@ -1,10 +1,9 @@
 {
-  "name": "express-es6-sample",
+  "name": "super-express.js",
   "version": "0.2.0",
   "private": true,
   "author": {
-    "name": "Jonathan Cunanan",
-    "url": "https://github.com/jcunanan05"
+    "name": "Avinash singh"
   },
   "license": "MIT",
   "dependencies": {
@@ -30,7 +29,7 @@
     "rimraf": "^3.0.2"
   },
   "nodemonConfig": {
-    "exec": "npm run dev",
+    "exec": "npm run prod",
     "watch": [
       "server/*",
       "public/*"
@@ -42,13 +41,13 @@
     ]
   },
   "jest": {
-    "testEnvironment": "node"
+    "testEnvironment": "node",
+    "setupFiles": ["./jest-setup-file.js"]
   },
   "scripts": {
     "start": "npm run prod",
     "build": "npm-run-all clean transpile",
     "server": "node ./dist-server/bin/www",
-    "dev": "npm-run-all build server",
     "prod": "npm-run-all build server",
     "transpile": "babel ./server --out-dir dist-server",
     "clean": "rimraf dist-server",

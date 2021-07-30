@@ -6,7 +6,7 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
-import { loadControllers } from './lib/controller';
+import { loadControllers } from './lib/core_controller';
 import { MyClass } from './routes/test';
 
 
@@ -24,5 +24,5 @@ app.use('/users', usersRouter);
 loadControllers(app,[
     MyClass
 ])
-
+ 
 export default app;

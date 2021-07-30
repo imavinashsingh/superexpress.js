@@ -1,4 +1,4 @@
-const {API,Get}=require('../lib/controller');
+const {API,Get}=require('../lib/core_controller');
 @API('/avi')
 export class MyClass {
     @Get()
