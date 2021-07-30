@@ -1,0 +1,14 @@
+{
+    "presets": [
+        "@babel/preset-env"
+      ],
+      "assumptions": {
+        "setPublicClassFields": true
+      },
+      "plugins": [
+        ["@babel/plugin-proposal-decorators", { "legacy": true }],
+        ["@babel/plugin-proposal-class-properties"]
+      ],
+      "sourceMaps": "inline",
+      "retainLines": true
+  }
