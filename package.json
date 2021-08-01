@@ -30,7 +30,7 @@
     "rimraf": "^3.0.2"
   },
   "nodemonConfig": {
-    "exec": "npm run dev",
+    "exec": "babel-node ./server/bin/www.js",
     "watch": [
       "server/*",
       "public/*"

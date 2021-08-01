@@ -1,7 +1,7 @@
 import { MySQLModel, rawQuery ,sp} from "../lib/super_mysql";
 
 @MySQLModel()
-export default class UserExampleModel{
+export default class UserModel{
     @rawQuery()
     getALLUsers(){
         return {

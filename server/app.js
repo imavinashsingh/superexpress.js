@@ -7,9 +7,9 @@ import logger from 'morgan';
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
 import { loadControllers } from './lib/super_router';
-import Userexample from './controllers/UserExample';
-import { loadModels } from './lib/super_mysql';
-import UserExampleModel from './models/UserExample';
+import { loadModels } from './lib/super_mysql'
+import UserController from './controllers/UserExample';
+import UserModel from './models/UserExample';
 var app = express();
 
 app.use(logger('dev'));
@@ -22,11 +22,11 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 loadModels([
-    UserExampleModel
+    UserModel
 ])
 
 app.use('/api', loadControllers([
-    Userexample
+    UserController
 ]));
 
 export default app;
