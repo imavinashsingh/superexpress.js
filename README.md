@@ -21,15 +21,15 @@ For stuff like heroku deployment, aws elasticbeanstalk, run `npm run start`
 * `build` - clean and transpile
 
 ## Example Controller 
-`
-import UserExample from "../models/UserExample";
+```
+import UserModel from "../models/UserExample";
 
 const { Router, Get, sendSuccess, sendError } = require("../lib/super_router");
 
 @Router()
-export default class Userexample {
+export default class UserControler {
     constructor() {
-        this.users = new UserExample();
+        this.users = new UserModel();
     }
 
     @Get()
@@ -42,14 +42,14 @@ export default class Userexample {
         }
     }
 }
-`
+```
 ## Example Model
 
-`
+```
 import { MySQLModel, rawQuery ,sp} from "../lib/super_mysql";
 
 @MySQLModel()
-export default class UserExampleModel{
+export default class UserModel{
     @rawQuery()
     getALLUsers(){
         return {
@@ -60,7 +60,7 @@ export default class UserExampleModel{
     @sp()
     getUser() {
         return {
-            args: '',
+            args: ``,
             query: `
       SELECT * FROM taptwointeract.user;
       `
@@ -85,5 +85,5 @@ export default class UserExampleModel{
     }
 
 }
-`
+```
 
