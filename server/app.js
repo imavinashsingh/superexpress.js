@@ -6,10 +6,10 @@ import logger from 'morgan';
 
 import indexRouter from './routes/index';
 import usersRouter from './routes/users';
-import { loadControllers } from './lib/core_controller';
-import { MyClass } from './routes/test';
-
-
+import { loadControllers } from './lib/super_router';
+import Userexample from './controllers/UserExample';
+import { loadModels } from './lib/super_mysql';
+import UserExampleModel from './models/UserExample';
 var app = express();
 
 app.use(logger('dev'));
@@ -21,8 +21,12 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-loadControllers(app,[
-    MyClass
+loadModels([
+    UserExampleModel
 ])
- 
+
+app.use('/api', loadControllers([
+    Userexample
+]));
+
 export default app;

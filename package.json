@@ -12,6 +12,7 @@
     "dotenv": "^10.0.0",
     "express": "~4.16.1",
     "morgan": "~1.9.1",
+    "mysql": "^2.18.1",
     "nodemon": "^2.0.12"
   },
   "devDependencies": {
@@ -29,7 +30,7 @@
     "rimraf": "^3.0.2"
   },
   "nodemonConfig": {
-    "exec": "npm run prod",
+    "exec": "npm run dev",
     "watch": [
       "server/*",
       "public/*"
@@ -42,13 +43,16 @@
   },
   "jest": {
     "testEnvironment": "node",
-    "setupFiles": ["./jest-setup-file.js"]
+    "setupFiles": [
+      "./jest-setup-file.js"
+    ]
   },
   "scripts": {
     "start": "npm run prod",
     "build": "npm-run-all clean transpile",
     "server": "node ./dist-server/bin/www",
     "prod": "npm-run-all build server",
+    "dev":"babel-node ./server/bin/www.js ",
     "transpile": "babel ./server --out-dir dist-server",
     "clean": "rimraf dist-server",
     "watch:dev": "nodemon",

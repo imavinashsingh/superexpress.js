@@ -1,4 +1,15 @@
-export function API(prefix = '', middleware = []) {
+import express from 'express';
+
+var r = express.Router();
+
+
+/**
+ * 
+ * @param {string} prefix 
+ * @param {[function(req: Request, res: Response, next: NextFunction){}]} middleware 
+ * @returns 
+ */
+export function Router(prefix = '/', middleware = []) {
   return (target) => {
     Reflect.defineMetadata('prefix', prefix, target);
 
@@ -21,7 +32,7 @@ export function API(prefix = '', middleware = []) {
 /**
  * This is used to convert into get API
  * @param {string} path   default-"/"
- * @param {[(req: Request, res: Response, next: NextFunction) => void]} middleware
+ * @param {[function(req: Request, res: Response, next: NextFunction){}]} middleware
  * @returns 
  */
 export function Get(path = "/", middleware = []) {
@@ -45,7 +56,12 @@ export function Get(path = "/", middleware = []) {
     Reflect.defineMetadata('routes', routes, target.constructor);
   };
 };
-
+/**
+ * This is used to convert into get API
+ * @param {string} path   default-"/"
+ * @param {[function(req: Request, res: Response, next: NextFunction){}]} middleware
+ * @returns 
+ */
 export function Put(path = "/", middleware = []) {
   // `target` equals our class, `propertyKey` equals our decorated method name
   return (target, propertyKey) => {
@@ -68,6 +84,12 @@ export function Put(path = "/", middleware = []) {
   };
 };
 
+/**
+ * This is used to convert into get API
+ * @param {string} path   default-"/"
+ * @param {[function(req: Request, res: Response, next: NextFunction){}]} middleware
+ * @returns 
+ */
 export function Post(path = "/", middleware = []) {
   // `target` equals our class, `propertyKey` equals our decorated method name
   return (target, propertyKey) => {
@@ -90,6 +112,12 @@ export function Post(path = "/", middleware = []) {
   };
 };
 
+/**
+ * This is used to convert into get API
+ * @param {string} path   default-"/"
+ * @param {[function(req: Request, res: Response, next: NextFunction){}]} middleware
+ * @returns 
+ */
 export function Delete(path = "/", middleware = []) {
   // `target` equals our class, `propertyKey` equals our decorated method name
   return (target, propertyKey) => {
@@ -112,24 +140,43 @@ export function Delete(path = "/", middleware = []) {
   };
 };
 
-
-export function loadControllers(app, controllers = []) {
+/**
+ * 
+ * @param {*} controllers 
+ * @returns router
+ */
+export function loadControllers(controllers = []) {
   controllers.forEach(controller => {
     const instance = new controller();
     const prefix = Reflect.getMetadata('prefix', controller);
     const routes = Reflect.getMetadata('routes', controller);
     const mw = Reflect.getMetadata('mw', controller);
     if (mw.length)
-      app.use(prefix, mw);
+      r.use(prefix, mw);
     routes.forEach(route => {
       if (route.mw.length)
-        app[route.requestMethod](prefix + route.path, route.mw, (req, res, next) => {
+        r[route.requestMethod](prefix + route.path, route.mw, (req, res, next) => {
           instance[route.methodName](req, res, next);
         });
       else
-        app[route.requestMethod](prefix + route.path, (req, res, next) => {
+        r[route.requestMethod](prefix + route.path, (req, res, next) => {
           instance[route.methodName](req, res, next);
         });
     });
+  });
+  return r;
+};
+
+export const sendSuccess = (res, data, message = null, status = 200) => {
+  return res.status(status).json({
+    message: message || 'success',
+    data: data
+  });
+};
+
+export const sendError = (res, message = null, status = 500) => {
+  console.warn(res, message || 'internal server error');
+  return res.status(status).json({
+    message: message || 'internal server error',
   });
 };

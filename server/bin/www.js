@@ -4,11 +4,12 @@
  * Module dependencies.
  */
 
- import app from '../app';
- import debugLib from 'debug';
- import http from 'http';
- import dotenv from 'dotenv'
- dotenv.config();
+import app from '../app';
+import debugLib from 'debug';
+import http from 'http';
+import dotenv from 'dotenv'
+import { checkLoadModels } from '../lib/super_mysql';
+dotenv.config();
 
 var debug = debugLib('myapp:server');
 
@@ -28,6 +29,7 @@ var server = http.createServer(app);
 /**
  * Listen on provided port, on all network interfaces.
  */
+
 
 server.listen(port);
 server.on('error', onError);
