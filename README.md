@@ -46,25 +46,44 @@ export default class Userexample {
 ## Example Model
 
 `
-import UserExample from "../models/UserExample";
+import { MySQLModel, rawQuery ,sp} from "../lib/super_mysql";
 
-const { Router, Get, sendSuccess, sendError } = require("../lib/super_router");
-
-@Router()
-export default class Userexample {
-    constructor() {
-        this.users = new UserExample();
-    }
-
-    @Get()
-    async sayhi(req, res, next) {
-        try {
-            const data = await this.users.getALLUsers().run(['1']);
-            sendSuccess(res, data, null, 200);
-        } catch (error) {
-            sendError(res, error)
+@MySQLModel()
+export default class UserExampleModel{
+    @rawQuery()
+    getALLUsers(){
+        return {
+            query:"select * from user where id=?"
         }
     }
+
+    @sp()
+    getUser() {
+        return {
+            args: ``,
+            query: `
+      SELECT * FROM taptwointeract.user;
+      `
+        }
+    }
+
+    @sp()
+    getUserDetails(){
+        const data={
+            args:`
+            IN f_email text,
+            IN f_user_id int(11)`,
+            query:`select *
+            from user u
+            where 
+            (case 
+                when f_user_id is not null then u.id = f_user_id
+                else u.email = f_email
+            end);`
+        };
+        return data
+    }
+
 }
 `
 
