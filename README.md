@@ -60,7 +60,7 @@ export default class UserExampleModel{
     @sp()
     getUser() {
         return {
-            args: ``,
+            args: '',
             query: `
       SELECT * FROM taptwointeract.user;
       `
