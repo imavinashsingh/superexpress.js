@@ -112,7 +112,7 @@ export default class UserModel{
  It has two helpers function 
  ```
  sendSuccess(res, data, message?, status?);
- sendError(res, message?);
+ sendError(res, message?,status?);
  ```
 
  ### super_mysql lib
